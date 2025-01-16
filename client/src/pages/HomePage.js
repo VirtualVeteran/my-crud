@@ -6,22 +6,14 @@ import { Link as MuiLink } from '@mui/material';
 const HomePage = () => (
   <div style={{ backgroundColor: '#A8D8FF', padding: '2rem' }}>
     <header>
-      <nav>
-        <MuiLink href="/" underline="none">
-          <Button variant="contained" color="primary">Home</Button>
-        </MuiLink>
-        <MuiLink href="/login" underline="none">
-          <Button variant="contained" color="primary">Login</Button>
-        </MuiLink>
-        <MuiLink href="/inventory" underline="none">
-          <Button variant="contained" color="primary">Inventory</Button>
-        </MuiLink>
-        <MuiLink href="/create-account" underline="none">
-          <Button variant="contained" color="primary">Create Account</Button>
-        </MuiLink>
-      </nav>
+    <h1>Welcome to the Kawaii Store</h1>
+      <div className='button-container'>
+      <a href="/" className="kawaii-button">Home</a>
+      <a href="/login" className="kawaii-button">Login</a>
+      <a href="/inventory" className="kawaii-button">Inventory</a>
+      <a href="/create-account" className="kawaii-button">Create Account</a>
+      </div>
     </header>
-    <h1>Welcome to the Inventory Manager!</h1>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
       {/* Render items here */}
       <div className="item-card">
