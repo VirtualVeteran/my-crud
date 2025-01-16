@@ -1,0 +1,28 @@
+
+.loginpage
+ {
+    background-image: url('../assets/background.jpg')
+  
+  }
+
+
+.kawaii-button {
+    background-color: #FFB6C1; /* Pastel pink */
+    color: white; /* White text */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 20px; /* Button size */
+    font-family: "Bubblegum Sans", cursive; /* Playful font */
+    border-radius: 12px; /* Rounded edges */
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block; /* Allows spacing and alignment */
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .kawaii-button:hover {
+    background-color: #FF91AF; /* Darker pink on hover */
+  }
+  
+  
