@@ -16,7 +16,7 @@ const HomePage = () => (
         <MuiLink href="/inventory" underline="none">
           <Button variant="contained" color="primary">Inventory</Button>
         </MuiLink>
-        <MuiLink href="/createAccount" underline="none">
+        <MuiLink href="/create-account" underline="none">
           <Button variant="contained" color="primary">Create Account</Button>
         </MuiLink>
       </nav>
