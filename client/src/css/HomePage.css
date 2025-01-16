@@ -1,6 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+
 
 
 .homepage {
     background-image: url('../assets/background.jpg')
   
+  }
+
+  h1 {
+    color: #ffb6c1; /* Pastel pink */
+    font-family: "Bubblegum Sans", cursive; /* Bubble-like font */
+    text-align: center; /* Optional: centers the text */
+    font-size: 3rem; /* Adjust size as needed */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Adds a soft shadow for depth */
+    margin: 20px 0;
+  }
+  
+  .kawaii-button {
+    background-color: #ffb6c1; /* Pastel pink */
+    color: white; /* Text color */
+    border: none;
+    border-radius: 12px; /* Rounded corners */
+    padding: 10px 20px; /* Button size */
+    font-family: "Bubblegum Sans", cursive; /* Matches the header font */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .kawaii-button:hover {
+    background-color: #ff91af; /* Slightly darker pink on hover */
   }
