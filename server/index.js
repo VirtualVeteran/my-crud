@@ -38,6 +38,22 @@ app.post('/items', async (req, res) => {
     }
 });
 
+//item detail page
+app.get('/items/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const item = await knex('items').where({ id }).first();
+    if (!item) {
+      return res.status(404).send('Item not found');
+    }
+    res.json(item);
+  } catch (error) {
+    console.error('Error fetching item:', error);
+    res.status(500).send('Error fetching item');
+  }
+});
+
+//login
 app.post('/login', async (req, res) => {
   console.log('Received data:', req.body); // Log the request body
 
