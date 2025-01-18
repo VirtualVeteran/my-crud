@@ -16,7 +16,7 @@ services:
     build:
       context: ../server
     ports:
-      - "8081:8080"
+      - "5000:5000"
     volumes:
       - "../server:/app"
     depends_on:
