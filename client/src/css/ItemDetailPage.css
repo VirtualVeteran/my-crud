@@ -20,12 +20,21 @@
     margin: 0.5rem 0;
   }
   
-  /* Button or link styles (optional) */
-  .view-more-link {
-    text-decoration: none;
-    color: #ff91af;
-    font-weight: bold;
-    margin-top: 1rem;
-    display: inline-block;
+  /* Back button styling */
+  .back-button {
+    background-color: #FFB6C1; /* Pastel pink */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: "Bubblegum Sans", cursive;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #FF91AF; /* Darker pink on hover */
   }
   

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../css/ItemDetailPage.css';
 
 const ItemDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Hook to navigate
   const [item, setItem] = useState(null);
 
   useEffect(() => {
@@ -24,6 +25,11 @@ const ItemDetailPage = () => {
       <p>{item.description}</p>
       <p>Quantity: {item.quantity}</p>
       <p>Price: ${item.price}</p>
+      
+      {/* Back button */}
+      <button onClick={() => navigate('/')} className="back-button">
+        Back to Inventory
+      </button>
     </div>
   );
 };
