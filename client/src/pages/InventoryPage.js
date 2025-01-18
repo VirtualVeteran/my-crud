@@ -1,42 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 const InventoryPage = () => {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch items from the server on component mount
-    axios.get('/api/items') // Assuming the Express server has this endpoint
-      .then(response => {
-        setItems(response.data); 
-      })
-      .catch(error => {
-        console.error('There was an error fetching the items!', error);
-      });
-  }, []);
+    // Fetch items from the server
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/items');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setItems(data); // Update the state with the fetched items
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []); // Empty dependency array ensures this runs only once
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <div style={{ backgroundColor: '#A8D8FF', padding: '2rem' }}>
-      <header>
-        <h1>Your Inventory</h1>
-        <div className='button-container'>
-          <a href="/" className="kawaii-button">Home</a>
-          <a href="/add-item" className="kawaii-button">Add Item</a>
-          <a href="/logout" className="kawaii-button">Logout</a>
-        </div>
-      </header>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-        {/* Render items dynamically */}
-        {items.map(item => (
-          <div className="item-card" key={item.id}>
-            <h3>{item.name}</h3>
-            <p>{item.description} <a href={`/item/${item.id}`}>View More</a></p>
-            <p>Quantity: {item.quantity}</p>
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        ))}
-      </div>
+    <div>
+      <h1>Inventory</h1>
+      {items.length === 0 ? (
+        <p>No items found.</p>
+      ) : (
+        <ul>
+          {items.map((item) => (
+            <li key={item.id}>
+              <strong>{item.name}</strong>: {item.description}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

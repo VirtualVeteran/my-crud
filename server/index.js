@@ -15,12 +15,22 @@ app.get('/', (req, res) => {
     res.status(200).json('Hello from root route');
 });
 
+app.get('/items', async (req, res) => {
+    try {
+      const items = await knex('items').select('*'); // Query your table
+      res.json(items); // Send the data as a JSON response
+    } catch (error) {
+      console.error('Error fetching items:', error);
+      res.status(500).send('Error fetching items');
+    }
+  });
+
 // Post route to fetch items
 app.post('/items', async (req, res) => {
     try {
         console.log('Received request for items');
         // Query the database to fetch items
-        const items = await knex('inventory_stock').select('*');
+        const items = await knex('items').select('*');
         res.status(200).json(items); // Send items as response
     } catch (error) {
         console.error('Error fetching items: ', error.message);
