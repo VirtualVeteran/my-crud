@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../css/InventoryPage.css';
 
 const InventoryPage = () => {
   const [items, setItems] = useState([]);
@@ -6,7 +7,6 @@ const InventoryPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch items from the server
     const fetchItems = async () => {
       try {
         const response = await fetch('http://localhost:5000/items');
@@ -14,7 +14,7 @@ const InventoryPage = () => {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        setItems(data); // Update the state with the fetched items
+        setItems(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -23,7 +23,10 @@ const InventoryPage = () => {
     };
 
     fetchItems();
-  }, []); // Empty dependency array ensures this runs only once
+  }, []);
+
+  const truncate = (text, maxLength) =>
+    text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 
   if (loading) {
     return <div>Loading...</div>;
@@ -36,13 +39,18 @@ const InventoryPage = () => {
   return (
     <div>
       <h1>Inventory</h1>
+      <div className="button-container">
+        <button className="kawaii-button">Add Item</button>
+        <button className="kawaii-button">Refresh</button>
+      </div>
       {items.length === 0 ? (
         <p>No items found.</p>
       ) : (
         <ul>
           {items.map((item) => (
             <li key={item.id}>
-              <strong>{item.name}</strong>: {item.description}
+              <strong>{item.name}</strong>
+              <p>{truncate(item.description, 100)}</p>
             </li>
           ))}
         </ul>
