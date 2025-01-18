@@ -38,6 +38,32 @@ app.post('/items', async (req, res) => {
     }
 });
 
+app.post('/login', async (req, res) => {
+  console.log('Received data:', req.body); // Log the request body
+
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required' });
+  }
+
+  try {
+      const user = await knex('users').where({ username }).first();
+
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      if (user.password === password) {
+          res.status(200).json({ message: 'Login successful', user });
+      } else {
+          res.status(401).json({ error: 'Invalid password' });
+      }
+  } catch (error) {
+      console.error('Error logging in:', error);
+      res.status(500).json({ error: 'Failed to log in' });
+  }
+});
 // Start the Express server
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`);

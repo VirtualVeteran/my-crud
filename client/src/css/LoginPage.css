@@ -1,11 +1,4 @@
 
-.loginpage
- {
-    background-image: url('../assets/background.jpg')
-  
-  }
-
-
 .kawaii-button {
     background-color: #FFB6C1; /* Pastel pink */
     color: white; /* White text */
@@ -25,4 +18,67 @@
     background-color: #FF91AF; /* Darker pink on hover */
   }
   
-  
+  /* Container for the background and centering the form */
+.login-container {
+  background-image: url('../assets/background.jpg'); /* Correct image path */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form styling */
+.login-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px; /* Limits the form width */
+  text-align: center;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+/* Input field styling */
+.login-input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Button styling */
+.login-button {
+  background-color: #ffb6c1;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #ff91af;
+}
+
+/* Sign up link styling */
+.sign-up-link {
+  margin-top: 1rem;
+}
+
+.sign-up-link-text {
+  text-decoration: none;
+  color: #77c9e2;
+}
+
