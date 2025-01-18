@@ -31,9 +31,29 @@ const CreateAccountPage = () => {
   };
 
   return (
-    <div>
-      <h1>Create Account</h1>
-      <form onSubmit={handleSubmit}>
+    <div
+      style={{
+        backgroundImage: `url('/assets/background.jpg')`, // Use the correct path to your image
+        backgroundSize: 'cover', // Ensure the image covers the entire container
+        backgroundRepeat: 'no-repeat', // Prevent the image from tiling
+        backgroundPosition: 'center', // Center the image
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <form
+        style={{
+          backgroundColor: '#ffffff',
+          padding: '2rem',
+          borderRadius: '10px',
+          width: '100%',
+          maxWidth: '400px', // Adjust the max width as needed
+        }}
+        onSubmit={handleSubmit}
+      >
+        <h1>Create Account</h1>
         <label>
           First Name:
           <input
@@ -80,7 +100,7 @@ const CreateAccountPage = () => {
         </label>
         <br />
         {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button type="submit">Create Account</button>
+        <button className='kawaii-button' type="submit">Create Account</button>
       </form>
     </div>
   );

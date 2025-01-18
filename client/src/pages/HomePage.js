@@ -6,11 +6,10 @@ import { Link as MuiLink } from '@mui/material';
 const HomePage = () => (
   <div style={{ backgroundColor: '#A8D8FF', padding: '2rem' }}>
     <header>
-    <h1>Welcome to the Kawaii Store</h1>
+    <h1>Welcome to Kawaii Inventory</h1>
       <div className='button-container'>
       <a href="/" className="kawaii-button">Home</a>
       <a href="/login" className="kawaii-button">Login</a>
-      <a href="/inventory" className="kawaii-button">Inventory</a>
       <a href="/create-account" className="kawaii-button">Create Account</a>
       </div>
     </header>

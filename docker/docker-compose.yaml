@@ -1,23 +1,32 @@
-version: "3"
+version: '3'
 
 services:
   postgres:
-    image: postgres
+    image: postgres:latest
     environment:
-      - DATABASE_HOST=127.0.0.1
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=docker
-    ports: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: inventory_db
+    ports:
       - "5432:5432"
-    volumes:
-      - "$HOME/docker/volumes/postgres:/var/lib/postgresql/data"
-  
+    networks:
+      - app_network
+
   server:
     build:
-      context: ../server
+      context: ../server # Adjusted path to point to the 'server' folder outside 'docker'
+    container_name: server
     ports:
       - "5000:5000"
     volumes:
-      - "../server:/app"
+      - ../server:/app # Adjusted volume mount to use the correct server path
+    environment:
+      - DATABASE_URL=postgres://postgres:docker@postgres:5432/postgres
     depends_on:
       - postgres
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
