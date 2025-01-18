@@ -80,6 +80,51 @@ app.post('/login', async (req, res) => {
       res.status(500).json({ error: 'Failed to log in' });
   }
 });
+
+
+app.post('/register', async (req, res) => {
+  const { username, first_name, last_name, password } = req.body;
+
+  if (!username || !first_name || !last_name || !password) {
+      return res.status(400).json({ error: 'Fields are required: username, first_name, last_name, password' });
+  }
+
+  try {
+      const [newUser] = await knex('users')
+          .insert({
+              username,
+              first_name,
+              last_name,
+              password, // Note: not hashed here; hash passwords for production.
+          })
+          .returning(['id', 'username', 'first_name', 'last_name']);
+
+      res.status(201).json({
+          message: 'User created successfully',
+          user: newUser,
+      });
+  } catch (error) {
+      if (error.code === '23505') {
+          res.status(409).json({ error: 'Username already exists' });
+      } else {
+          res.status(500).json({ error: 'Failed to create user' });
+      }
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Start the Express server
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`);

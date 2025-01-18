@@ -1,109 +1,90 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../css/CreateAccount.css';
 
 const CreateAccountPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [error, setError] = useState(null);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-    try {
-      const response = await axios.post('/api/register', {
-        username,
-        password,
-        firstName,
-        lastName,
-      });
-      console.log(response.data);
-      // Redirect to login page or display success message
-    } catch (error) {
-      setError(error.response.data);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevents the default form submission
 
-  return (
-    <div
-      style={{
-        backgroundImage: `url('/assets/background.jpg')`, // Use the correct path to your image
-        backgroundSize: 'cover', // Ensure the image covers the entire container
-        backgroundRepeat: 'no-repeat', // Prevent the image from tiling
-        backgroundPosition: 'center', // Center the image
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <form
-        style={{
-          backgroundColor: '#ffffff',
-          padding: '2rem',
-          borderRadius: '10px',
-          width: '100%',
-          maxWidth: '400px', // Adjust the max width as needed
-        }}
-        onSubmit={handleSubmit}
-      >
-        <h1>Create Account</h1>
-        <label>
-          First Name:
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Confirm Password:
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button className='kawaii-button' type="submit">Create Account</button>
-      </form>
-    </div>
-  );
+        const formData = {
+            first_name: firstName,
+            last_name: lastName,
+            username,
+            password,
+        };
+
+        try {
+            const response = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+
+            const result = await response.json();
+            console.log('Registration successful', result);
+            // Handle successful registration (e.g., redirect or show message)
+        } catch (err) {
+            console.error(err);
+            setError('Something went wrong. Please try again.');
+        }
+    };
+
+    return (
+        <div>
+            <h2>Create Account</h2>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>First Name:</label>
+                    <input
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Username:</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Create Account</button>
+            </form>
+        </div>
+    );
 };
 
 export default CreateAccountPage;
