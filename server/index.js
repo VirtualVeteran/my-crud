@@ -1,129 +1,188 @@
 const express = require('express');
 const cors = require('cors');
-const knex = require('knex')(require('./knexfile.js')["development"]);
+const knex = require('knex')(require('./knexfile.js')['development']);
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 5000;
 
-
+// Import controller functions
+// const { addUser, getPassword, getAllItems, getItemById, getItemsByUserId, addItem, updateItem, deleteItem } = require('./db/controllers');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Root route
 app.get('/', (req, res) => {
     res.status(200).json('Hello from root route');
 });
 
+// View all items
 app.get('/items', async (req, res) => {
     try {
-      const items = await knex('items').select('*'); // Query your table
-      res.json(items); // Send the data as a JSON response
-    } catch (error) {
-      console.error('Error fetching items:', error);
-      res.status(500).send('Error fetching items');
-    }
-  });
-
-// Post route to fetch items
-app.post('/items', async (req, res) => {
-    try {
-        console.log('Received request for items');
-        // Query the database to fetch items
         const items = await knex('items').select('*');
-        res.status(200).json(items); // Send items as response
+        res.status(200).json(items); // Send all items
     } catch (error) {
-        console.error('Error fetching items: ', error.message);
-        res.status(500).json({ error: 'Failed to fetch items' });
+        console.error('Error fetching items:', error);
+        res.status(500).send('Error fetching items');
     }
 });
 
-//item detail page
+// View specific item by ID
 app.get('/items/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const item = await knex('items').where({ id }).first();
-    if (!item) {
-      return res.status(404).send('Item not found');
+    const { id } = req.params;
+    try {
+        const item = await knex('items').where({ id }).first();
+        if (!item) {
+            return res.status(404).send('Item not found');
+        }
+        res.status(200).json(item); // Send the specific item
+    } catch (error) {
+        console.error('Error fetching item:', error);
+        res.status(500).send('Error fetching item');
     }
-    res.json(item);
-  } catch (error) {
-    console.error('Error fetching item:', error);
-    res.status(500).send('Error fetching item');
-  }
 });
 
-//login
-app.post('/login', async (req, res) => {
-  console.log('Received data:', req.body); // Log the request body
-
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required' });
-  }
-
-  try {
-      const user = await knex('users').where({ username }).first();
-
-      if (!user) {
-          return res.status(404).json({ error: 'User not found' });
-      }
-
-      if (user.password === password) {
-          res.status(200).json({ message: 'Login successful', user });
-      } else {
-          res.status(401).json({ error: 'Invalid password' });
-      }
-  } catch (error) {
-      console.error('Error logging in:', error);
-      res.status(500).json({ error: 'Failed to log in' });
-  }
-});
-
-
-app.post('/register', async (req, res) => {
-  const { username, first_name, last_name, password } = req.body;
-
-  if (!username || !first_name || !last_name || !password) {
-      return res.status(400).json({ error: 'Fields are required: username, first_name, last_name, password' });
-  }
-
-  try {
-      const [newUser] = await knex('users')
-          .insert({
-              username,
-              first_name,
-              last_name,
-              password, // Note: not hashed here; hash passwords for production.
-          })
-          .returning(['id', 'username', 'first_name', 'last_name']);
-
-      res.status(201).json({
-          message: 'User created successfully',
-          user: newUser,
+// View items by user_id (user's items)
+app.get('/user/:id', (req, res) => {
+    const { id } = req.params;
+    knex('items')
+      .select('*')
+      .where('user_id', id)  // Change this to 'user_id' to match the foreign key column
+      .then(items => {
+        const data = items.map((item) => item);
+        res.status(200).send(data);
+      })
+      .catch(error => {
+        console.error('Error fetching items:', error);
+        res.status(500).json({ error: 'Failed to fetch items' });
       });
-  } catch (error) {
-      if (error.code === '23505') {
-          res.status(409).json({ error: 'Username already exists' });
-      } else {
-          res.status(500).json({ error: 'Failed to create user' });
-      }
-  }
+  });
+  
+// Login route
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+    }
+
+    try {
+        const user = await knex('users').where({ username }).first();
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (user.password === password) {
+            res.cookie('userId', user.id, { 
+                httpOnly: true, 
+                secure: process.env.NODE_ENV === 'production', 
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), 
+                path: '/' 
+            });
+
+            res.status(200).json({ message: 'Login successful', user });
+        } else {
+            res.status(401).json({ error: 'Invalid password' });
+        }
+    } catch (error) {
+        console.error('Error logging in:', error);
+        res.status(500).json({ error: 'Failed to log in' });
+    }
 });
 
+// Register route
+app.post('/register', async (req, res) => {
+    const { username, first_name, last_name, password } = req.body;
 
+    if (!username || !first_name || !last_name || !password) {
+        return res.status(400).json({ error: 'Fields are required: username, first_name, last_name, password' });
+    }
 
+    try {
+        const [newUser] = await knex('users')
+            .insert({
+                username,
+                first_name,
+                last_name,
+                password, // Note: not hashed here; hash passwords for production.
+            })
+            .returning(['id', 'username', 'first_name', 'last_name']);
 
+        res.status(201).json({
+            message: 'User created successfully',
+            user: newUser,
+        });
+    } catch (error) {
+        if (error.code === '23505') {
+            res.status(409).json({ error: 'Username already exists' });
+        } else {
+            res.status(500).json({ error: 'Failed to create user' });
+        }
+    }
+});
 
+// Add item (assuming the request body contains the necessary item data)
+app.post('/items', async (req, res) => {
+    const { name, description, quantity, user_id } = req.body;
 
+    if (!name || !description || !quantity || !user_id) {
+        return res.status(400).json({ error: 'All fields are required: name, description, quantity, user_id' });
+    }
 
+    try {
+        const [newItem] = await knex('items')
+            .insert({ name, description, quantity, user_id })
+            .returning('*');
+        res.status(201).json({ message: 'Item added successfully', item: newItem });
+    } catch (error) {
+        console.error('Error adding item:', error);
+        res.status(500).json({ error: 'Failed to add item' });
+    }
+});
 
+// Update item (assuming the request body contains the necessary fields to update)
+app.put('/items/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, description, quantity } = req.body;
 
+    try {
+        const updatedItem = await knex('items')
+            .where({ id })
+            .update({ name, description, quantity })
+            .returning('*');
+        
+        if (updatedItem.length === 0) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
 
+        res.status(200).json({ message: 'Item updated successfully', item: updatedItem[0] });
+    } catch (error) {
+        console.error('Error updating item:', error);
+        res.status(500).json({ error: 'Failed to update item' });
+    }
+});
 
+// Delete item
+app.delete('/items/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedItem = await knex('items')
+            .where({ id })
+            .del()
+            .returning('*');
 
+        if (deletedItem.length === 0) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
 
+        res.status(200).json({ message: 'Item deleted successfully', item: deletedItem[0] });
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).json({ error: 'Failed to delete item' });
+    }
+});
 
 // Start the Express server
 app.listen(port, () => {

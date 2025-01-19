@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';  // Import js-cookie
 import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
 
@@ -25,7 +26,11 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-        navigate('/inventory');
+        // Save userId in cookies
+        Cookies.set('userId', data.userId, { expires: 7, path: '' }); // expires in 7 days
+      
+        // Redirect to the user's specific inventory page
+        navigate('/user-inventory');
       } else {
         setErrorMessage(data.error || 'Failed to log in');
       }
