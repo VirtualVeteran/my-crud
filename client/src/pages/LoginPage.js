@@ -1,65 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';  // Import js-cookie
 import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
 
+const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setErrorMessage('');
 
-const LoginPage = () => (
-  <div
-  style={{
-    backgroundImage: `url('/assets/background.jpg')`, // Use the correct path to your image
-    backgroundSize: 'cover', // Ensure the image covers the entire container
-    backgroundRepeat: 'no-repeat', // Prevent the image from tiling
-    backgroundPosition: 'center', // Center the image
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }}
-  >
-    <form
-      style={{
-        backgroundColor: '#ffffff',
-        padding: '2rem',
-        borderRadius: '10px',
-      }}
-    >
-      <h2>Login to Your Account</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        required
-        style={{
-          marginBottom: '1rem',
-          padding: '0.5rem',
-          width: '100%',
-        }}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        required
-        style={{
-          marginBottom: '1rem',
-          padding: '0.5rem',
-          width: '100%',
-        }}
-      />
-      {/* Updated button */}
-      <button type="submit" className="kawaii-button">
-        Login
-      </button>
-      <p style={{ marginTop: '1rem' }}>
-        Don't have an account?{' '}
-        <Link
-          to="/create-account"
-          style={{ textDecoration: 'none', color: '#77C9E2' }}
-        >
-          Sign up
-        </Link>
-      </p>
-    </form>
-  </div>
-);
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        // Save userId in cookies
+        Cookies.set('userId', data.user.id, { expires: 7, path: '/' });
+      
+        // Redirect to the user's specific inventory page
+        navigate('/user-inventory');
+      } else {
+        setErrorMessage(data.error || 'Failed to log in');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrorMessage('Failed to connect to the server');
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h2>🎀Login to Your Account🎀</h2>
+        {errorMessage && (
+          <div className="error-message">
+            <strong>{errorMessage}</strong>
+          </div>
+        )}
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          className="login-input"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="login-input"
+        />
+        <button type="submit" className="kawaii-button login-button">
+          Login
+        </button>
+        <p className="sign-up-link">
+          Don't have an account?{' '}
+          <Link to="/create-account" className="sign-up-link-text">
+            Sign up
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
+};
 
 export default LoginPage;

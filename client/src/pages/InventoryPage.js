@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../css/InventoryPage.css';
 
-const InventoryPage = () => (
-  <div style={{ backgroundColor: '#A8D8FF', padding: '2rem' }}>
-    <header>
-    <h1>Your Inventory</h1>
-    <div className='button-container'>
-      <a href="/" className="kawaii-button">Home</a>
-      <a href="/add-item" className="kawaii-button">Add Item</a>
-      <a href="/logout" className="kawaii-button">logout</a>
-      </div>
-    </header>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-      {/* Render items here */}
-      <div className="item-card">
-        <h3>Item Name</h3>
-        <p>Item description... <a href="/item/:id">View More</a></p>
-        <p>Quantity: 10</p>
-        <button>Edit</button>
-        <button>Delete</button>
+const InventoryPage = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    // Fetch items from your server
+    const fetchItems = async () => {
+      const response = await fetch('http://localhost:5000/items');
+      const data = await response.json();
+      setItems(data);
+    };
+
+    fetchItems();
+  }, []);
+
+  return (
+    <div className="inventory-container">
+      <h2>Inventory</h2>
+      <div className="items-grid">
+        {items.map((item) => (
+          <div key={item.id} className="item-card">
+            <h3>{item.name}</h3>
+            <p>{item.description.slice(0, 100)}...</p>
+            <p>Price: ${item.price}</p>
+            <Link to={`/item/${item.id}`} className="view-item">View More</Link>
+          </div>
+        ))}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default InventoryPage;

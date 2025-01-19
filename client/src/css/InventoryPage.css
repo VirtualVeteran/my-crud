@@ -1,25 +1,91 @@
+/* General page styling */
+body {
+  font-family: 'Comic Sans MS', 'Chalkboard', cursive;
+  background-color: #ffecf3; /* Light pink background */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #ff69b4; /* Hot pink */
+  text-shadow: 2px 2px 0px #ffc0cb; /* Soft shadow */
+  margin-top: 20px;
+}
+
+/* Container styling */
+div {
+  padding: 20px;
+}
+
+/* List styling */
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Individual item styling */
+li {
+  background-color: #fff;
+  border: 3px solid #ffb6c1; /* Light pink border */
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+li:hover {
+  transform: translateY(-5px);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Item name styling */
+li strong {
+  font-size: 1.2rem;
+  color: #ff69b4; /* Hot pink */
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Description styling */
+li p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* Button container styling */
 .button-container {
-    display: flex; /* Use flexbox layout */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Align items vertically (if needed) */
-    gap: 10px; /* Add space between the buttons */
-    margin-top: 1rem; /* Add space above the button group */
-  }
-  
-  .kawaii-button {
-    background-color: #FFB6C1; /* Pastel pink */
-    color: white; /* White text */
-    text-decoration: none; /* Remove underline */
-    padding: 10px 20px; /* Button size */
-    font-family: "Bubblegum Sans", cursive; /* Playful font */
-    border-radius: 12px; /* Rounded edges */
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .kawaii-button:hover {
-    background-color: #FF91AF; /* Darker pink on hover */
-  }
-  
+  display: flex; /* Use flexbox layout */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Align items vertically (if needed) */
+  gap: 10px; /* Add space between the buttons */
+  margin-top: 1rem; /* Add space above the button group */
+}
+
+/* Kawaii button styling */
+.kawaii-button {
+  background-color: #FFB6C1; /* Pastel pink */
+  color: white; /* White text */
+  text-decoration: none; /* Remove underline */
+  padding: 10px 20px; /* Button size */
+  font-family: "Bubblegum Sans", cursive; /* Playful font */
+  border-radius: 12px; /* Rounded edges */
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.kawaii-button:hover {
+  background-color: #FF91AF; /* Darker pink on hover */
+}
