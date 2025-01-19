@@ -1,17 +1,17 @@
 // DeveloperPage.js
 import React from 'react';
 import '../css/DeveloperPage.css';
+import developerImage from '../assets/developer.png';
 
 const DeveloperPage = () => {
   return (
     <div className="developer-page">
       <div className="developer-card">
-        <img 
-          src="/path-to-your-avatar-image.jpg" 
-          alt="Cute avatar of the developer" 
-          className="developer-avatar" 
-        />
-        <h1 className="developer-name">🌸Hi, I'm E! 🌸</h1>
+      <img 
+  src={developerImage} 
+  alt="Cute avatar of the developer" 
+  className="developer-avatar" 
+/>    <h1 className="developer-name">🌸Hi, I'm E! 🌸</h1>
         <p className="developer-bio">
           I'm a passionate web developer who loves creating magical experiences on the web.✨ When I'm not coding, you can find me:
         </p>

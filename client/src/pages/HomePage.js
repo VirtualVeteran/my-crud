@@ -36,6 +36,7 @@ const HomePage = () => {
           <a href="/" className="kawaii-button">Home</a>
           <a href="/login" className="kawaii-button">Login</a>
           <a href="/create-account" className="kawaii-button">Create Account</a>
+          <a href="/developer" className="kawaii-button">Meet The Developer</a>
         </div>
       </header>
 
