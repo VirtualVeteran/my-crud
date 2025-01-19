@@ -38,7 +38,7 @@ const ItemDetailPage = () => {
       navigate('/');
     }
   }} 
-  className="back-button"
+  className="kawaii-button"
 >
   Back to Inventory
 </button>

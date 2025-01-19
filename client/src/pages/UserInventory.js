@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate, Link } from 'react-router-dom'; // Import Link for routing
 import DeleteButtonFunction from '../components/DeleteButtonFunction'; // Import the delete button function
-import UserBanner from '../components/UserBanner'; 
+import UserBanner from '../components/UserBanner';
 import '../css/UserInventoryPage.css';
 
 const UserInventory = () => {
@@ -69,43 +69,21 @@ const UserInventory = () => {
     }
   };
 
-  // Function to refresh the inventory list after item deletion
-  const refreshItems = () => {
-    const fetchUserInventory = async () => {
-      if (!userId) {
-        setError('User not logged in.');
-        return;
-      }
-
-      try {
-        const response = await fetch(`http://localhost:5000/user/${userId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch inventory');
-        }
-        const data = await response.json();
-        setItems(data);
-      } catch (err) {
-        console.error(err);
-        setError('Something went wrong while fetching the inventory.');
-      }
-    };
-
-    fetchUserInventory();
-  };
-
   return (
     <div>
-          <UserBanner userName={userName} />
+      <UserBanner userName={userName} />
       <h2>Your Inventory</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* Add Item Button */}
-      <button onClick={() => navigate('/add-item')}>Add New Item</button>
+      <button onClick={() => navigate('/add-item')} className="kawaii-button">
+        Add New Item
+      </button>
 
       {items.length > 0 ? (
         <ul>
           {items.map((item) => (
-            <li key={item.id} style={{ display: 'flex', alignItems: 'center' }}>
+            <li key={item.id} className="item-card" style={{ position: 'relative' }}>
               {editingItemId === item.id ? (
                 <>
                   <input
@@ -118,18 +96,25 @@ const UserInventory = () => {
                     value={editedItem.description || ''}
                     onChange={(e) => handleInputChange('description', e.target.value)}
                   />
-                  <button onClick={() => handleSaveClick(item.id)}>Save</button>
+                  <button onClick={() => handleSaveClick(item.id)} className="kawaii-button">
+                    Save
+                  </button>
                 </>
               ) : (
                 <>
                   <h3>{item.name}</h3>
                   <p>{item.description}</p>
-                  <button onClick={() => handleEditClick(item)}>Edit</button>
+                  <button onClick={() => handleEditClick(item)} className="kawaii-button">
+                    Edit
+                  </button>
                 </>
               )}
               {/* Delete button */}
-              <DeleteButtonFunction itemId={item.id} onDelete={refreshItems} />
-              <Link to={`/item/${item.id}`} className="view-more-link">View More</Link>
+              <DeleteButtonFunction itemId={item.id} onDelete={() => setItems(items.filter((i) => i.id !== item.id))} />
+              {/* View Item Link */}
+              <Link to={`/item/${item.id}`} className="kawaii-button">
+                View Item
+              </Link>
             </li>
           ))}
         </ul>

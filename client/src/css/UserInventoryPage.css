@@ -1,121 +1,131 @@
 /* General layout and spacing */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 10px;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Item list container */
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Item list container */
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px;
+}
+
+/* Item card styling */
+li {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* Make the item card the reference for absolute positioning */
+}
+
+/* Hover effect for item cards */
+li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Edit and Save buttons */
+input[type='text'] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  width: auto;
+  padding: 5px 10px;
+  background-color: #008CBA;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #007b8f;
+}
+
+/* Error message */
+p {
+  color: red;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Styling for item names and descriptions */
+h3 {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  color: #666;
+  padding-bottom: 10px;
+}
+
+/* Delete button style */
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #d6336c; /* Dark pink background */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #b82d57; /* Darker pink on hover */
+}
+
+/* Responsive design: Adjust layout for smaller screens */
+@media (max-width: 768px) {
   ul {
-    list-style-type: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 20px;
+    grid-template-columns: 1fr 1fr;
   }
-  
-  /* Item card styling */
-  li {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  ul {
+    grid-template-columns: 1fr;
   }
-  
-  /* Hover effect for item cards */
-  li:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Edit and Save buttons */
-  input[type='text'] {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  button {
-    width: auto;
-    padding: 5px 10px;
-    background-color: #008CBA;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  
-  button:hover {
-    background-color: #007b8f;
-  }
-  
-  /* Error message */
-  p {
-    color: red;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  /* Styling for item names and descriptions */
-  h3 {
-    font-size: 18px;
-    color: #333;
-    margin: 0;
-    padding-bottom: 10px;
-  }
-  
-  p {
-    font-size: 14px;
-    color: #666;
-    padding-bottom: 10px;
-  }
-  
-  li button {
-    margin-top: 10px;
-    background-color: #ff4d4d;
-  }
-  
-  li button:hover {
-    background-color: #ff3333;
-  }
-  
-  /* Responsive design: Adjust layout for smaller screens */
-  @media (max-width: 768px) {
-    ul {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    ul {
-      grid-template-columns: 1fr;
-    }
-  }
-  
+}

@@ -26,14 +26,18 @@ const DeleteButtonFunction = ({ itemId, onDelete }) => {
       <button
         onClick={() => setShowDialog(true)}
         style={{
-          marginLeft: 'auto',
-          backgroundColor: 'red',
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          backgroundColor: 'pink', // Dark pink background
           color: 'white',
           border: 'none',
           borderRadius: '50%',
           width: '24px',
           height: '24px',
           cursor: 'pointer',
+          fontSize: '16px', // Makes the "X" visible
+          zIndex: 10,
         }}
       >
         X
@@ -63,9 +67,9 @@ const DeleteButtonFunction = ({ itemId, onDelete }) => {
               textAlign: 'center',
             }}
           >
-            <p>Are you sure you want to delete this item?</p>
-            <button onClick={handleDelete}>Yes</button>
-            <button onClick={() => setShowDialog(false)}>No</button>
+            <p>Hey Bestie! Are you sure you want to delete this item?</p>
+            <button className='kawaii-button' onClick={handleDelete}>Yes</button>
+            <button className='kawaii-button' onClick={() => setShowDialog(false)}>No</button>
           </div>
         </div>
       )}
