@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import '../css/AddItemPage.css'; // Assuming you have a separate CSS file for your styles
 
 const AddItemPage = () => {
   const [name, setName] = useState('');
@@ -45,49 +46,46 @@ const AddItemPage = () => {
   };
 
   return (
-    <div>
-      <h2>Add New Item</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleAddItem}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Price:</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Image URL:</label>
-          <input
-            type="text"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-          />
-        </div>
-        <button type="submit">Add Item</button>
-      </form>
-      <button onClick={() => navigate('/user-inventory')}>Cancel</button>
-    </div>
+    <form onSubmit={handleAddItem}>
+  <div>
+    <label>Name:</label>
+    <input
+      type="text"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+    />
+  </div>
+  <div>
+    <label>Description:</label>
+    <input
+      type="text"
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      required
+    />
+  </div>
+  <div>
+    <label>Price:</label>
+    <input
+      type="number"
+      value={price}
+      onChange={(e) => setPrice(e.target.value)}
+      required
+    />
+  </div>
+  <div>
+    <label>Image URL:</label>
+    <input
+      type="text"
+      value={imageUrl}
+      onChange={(e) => setImageUrl(e.target.value)}
+    />
+  </div>
+  <button className="kawaii-button" type="submit">Add Item</button>
+  <button className="kawaii-button" type="button" onClick={() => navigate('/user-inventory')}>Cancel</button>
+</form>
+
   );
 };
 

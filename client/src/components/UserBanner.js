@@ -3,7 +3,7 @@ import { Box, Typography, Avatar } from '@mui/material';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt'; // Material-UI icon
 import LogoutFunction from './LogoutFunction'; // Import LogoutFunction
 
-const UserBanner = ({ userName }) => {
+const UserBanner = () => {
   const { handleLogout } = LogoutFunction(); // Use the logout function
 
   return (
@@ -35,7 +35,7 @@ const UserBanner = ({ userName }) => {
               fontFamily: 'Comic Sans MS, cursive',
             }}
           >
-            Welcome back, {userName}!
+            Hey Bestie!
           </Typography>
           <Typography
             variant="body1"
@@ -44,7 +44,7 @@ const UserBanner = ({ userName }) => {
               fontFamily: 'Comic Sans MS, cursive',
             }}
           >
-            Let's manage your inventory with some cute vibes!
+            This is your personal inventory page
           </Typography>
         </Box>
       </Box>

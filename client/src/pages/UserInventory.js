@@ -72,7 +72,6 @@ const UserInventory = () => {
   return (
     <div>
       <UserBanner userName={userName} />
-      <h2>Your Inventory</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* Add Item Button */}
