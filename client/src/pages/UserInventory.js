@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import DeleteButtonFunction from './DeleteButtonFunction'; // Import the delete button function
+import DeleteButtonFunction from '../components/DeleteButtonFunction'; // Import the delete button function
+import UserBanner from '../components/UserBanner'; 
 
 const UserInventory = () => {
   const [items, setItems] = useState([]);
@@ -10,6 +11,7 @@ const UserInventory = () => {
   const [editedItem, setEditedItem] = useState({}); // Tracks changes made to the item
   const userId = Cookies.get('userId'); // Get userId from cookies
   const navigate = useNavigate(); // Initialize navigate
+  const userName = Cookies.get('userName');
 
   useEffect(() => {
     const fetchUserInventory = async () => {
@@ -92,6 +94,7 @@ const UserInventory = () => {
 
   return (
     <div>
+          <UserBanner userName={userName} />
       <h2>Your Inventory</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
