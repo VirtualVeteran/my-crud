@@ -8,6 +8,8 @@ import HomePage from './pages/HomePage';
 import CreateAccountPage from './pages/CreateAccountPage';
 import UserInventory from './pages/UserInventory';
 import AddItemPage from './pages/AddItemPage';
+import DeveloperPage from './pages/DeveloperPage';
+
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
         <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/user-inventory" element={<UserInventory />} />
         <Route path="/add-item" element={<AddItemPage />} />
+        <Route path="/developer" element={<DeveloperPage />} />
       </Routes>
     </Router>
   );

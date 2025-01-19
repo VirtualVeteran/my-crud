@@ -29,9 +29,9 @@ const HomePage = () => {
     text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 
   return (
-    <div style={{ backgroundColor: '#A8D8FF', padding: '2rem' }}>
+    <div>
       <header>
-        <h1>Welcome to Kawaii Inventory</h1>
+        <h1>🍓 Welcome to Kawaii Inventory🍓</h1>
         <div className="button-container">
           <a href="/" className="kawaii-button">Home</a>
           <a href="/login" className="kawaii-button">Login</a>

@@ -9,7 +9,8 @@
 
   .header-container {
     text-align: center; /* Centers the header text */
-    margin-top: 20px; /* Adds space above the header */
+    margin-top: 20px;
+    
   }
 
   h1 {
