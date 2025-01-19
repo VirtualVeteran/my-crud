@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../css/ItemDetailPage.css';
+import Cookies from 'js-cookie';
 
 const ItemDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Hook to navigate
   const [item, setItem] = useState(null);
+  const userId = Cookies.get('userId');
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -27,9 +29,20 @@ const ItemDetailPage = () => {
       <p>Price: ${item.price}</p>
       
       {/* Back button */}
-      <button onClick={() => navigate('/')} className="back-button">
-        Back to Inventory
-      </button>
+      <button 
+  onClick={() => {
+    if (userId) {
+      // Redirect logged-in users back to their inventory page
+      navigate('/user-inventory');
+    } else {
+      // Redirect visitors to the homepage
+      navigate('/');
+    }
+  }} 
+  className="back-button"
+>
+  Back to Inventory
+</button>
     </div>
   );
 };

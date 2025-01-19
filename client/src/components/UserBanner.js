@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box, Typography, Button, Avatar } from '@mui/material';
+import { Box, Typography, Avatar } from '@mui/material';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt'; // Material-UI icon
+import LogoutFunction from './LogoutFunction'; // Import LogoutFunction
 
 const UserBanner = ({ userName }) => {
+  const { handleLogout } = LogoutFunction(); // Use the logout function
+
   return (
     <Box
       sx={{
@@ -45,11 +48,18 @@ const UserBanner = ({ userName }) => {
           </Typography>
         </Box>
       </Box>
+      
+      {/* Button container */}
       <div className="button-container">
-          <a href="/" className="kawaii-button">Home</a>
-          <a href="/" className="kawaii-button">Logout</a>
-          <a href="/inventory" className="kawaii-button">Site Inventory</a>
-        </div>
+        {/* Home button */}
+        <a href="/" className="kawaii-button">Home</a>
+        
+        {/* Logout button */}
+        <button onClick={handleLogout} className="kawaii-button">Logout</button>
+        
+        {/* Inventory button */}
+        <a href="/inventory" className="kawaii-button">Site Inventory</a>
+      </div>
     </Box>
   );
 };

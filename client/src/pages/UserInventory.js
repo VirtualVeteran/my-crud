@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate for navigation
 import DeleteButtonFunction from '../components/DeleteButtonFunction'; // Import the delete button function
 import UserBanner from '../components/UserBanner'; 
+import '../css/UserInventoryPage.css';
 
 const UserInventory = () => {
   const [items, setItems] = useState([]);
@@ -128,6 +129,7 @@ const UserInventory = () => {
               )}
               {/* Delete button */}
               <DeleteButtonFunction itemId={item.id} onDelete={refreshItems} />
+              <Link to={`/item/${item.id}`} className="view-more-link">View More</Link>
             </li>
           ))}
         </ul>
