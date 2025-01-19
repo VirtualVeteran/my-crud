@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import DeleteButtonFunction from './DeleteButtonFunction'; // Import the delete button function
 
 const UserInventory = () => {
   const [items, setItems] = useState([]);
@@ -65,6 +66,30 @@ const UserInventory = () => {
     }
   };
 
+  // Function to refresh the inventory list after item deletion
+  const refreshItems = () => {
+    const fetchUserInventory = async () => {
+      if (!userId) {
+        setError('User not logged in.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5000/user/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch inventory');
+        }
+        const data = await response.json();
+        setItems(data);
+      } catch (err) {
+        console.error(err);
+        setError('Something went wrong while fetching the inventory.');
+      }
+    };
+
+    fetchUserInventory();
+  };
+
   return (
     <div>
       <h2>Your Inventory</h2>
@@ -76,7 +101,7 @@ const UserInventory = () => {
       {items.length > 0 ? (
         <ul>
           {items.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} style={{ display: 'flex', alignItems: 'center' }}>
               {editingItemId === item.id ? (
                 <>
                   <input
@@ -98,6 +123,8 @@ const UserInventory = () => {
                   <button onClick={() => handleEditClick(item)}>Edit</button>
                 </>
               )}
+              {/* Delete button */}
+              <DeleteButtonFunction itemId={item.id} onDelete={refreshItems} />
             </li>
           ))}
         </ul>
