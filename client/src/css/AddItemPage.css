@@ -1,18 +1,29 @@
 
   
   /* Style the form itself */
+ form {
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Form styling */
   form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 500px;
+    max-width: 400px; /* Limits the form width */
+    text-align: center;
+    margin-top: 100px;
+    margin-left: 650px;
   }
   
   /* Style the form inputs */
   form div {
     margin-bottom: 15px;
+    
   }
   
   form label {
