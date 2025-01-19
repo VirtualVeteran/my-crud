@@ -125,15 +125,15 @@ app.post('/register', async (req, res) => {
 
 // Add item (assuming the request body contains the necessary item data)
 app.post('/items', async (req, res) => {
-    const { name, description, quantity, user_id } = req.body;
+    const { name, description, price, user_id } = req.body;
 
-    if (!name || !description || !quantity || !user_id) {
-        return res.status(400).json({ error: 'All fields are required: name, description, quantity, user_id' });
+    if (!name || !description || !price || !user_id) {
+        return res.status(400).json({ error: 'All fields are required: name, description, price, user_id' });
     }
 
     try {
         const [newItem] = await knex('items')
-            .insert({ name, description, quantity, user_id })
+            .insert({ name, description, price, user_id })
             .returning('*');
         res.status(201).json({ message: 'Item added successfully', item: newItem });
     } catch (error) {
@@ -142,27 +142,29 @@ app.post('/items', async (req, res) => {
     }
 });
 
-// Update item (assuming the request body contains the necessary fields to update)
+//edit items
 app.put('/items/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, description, quantity } = req.body;
-
+    const { name, description } = req.body;
+  
     try {
-        const updatedItem = await knex('items')
-            .where({ id })
-            .update({ name, description, quantity })
-            .returning('*');
-        
-        if (updatedItem.length === 0) {
-            return res.status(404).json({ error: 'Item not found' });
-        }
-
-        res.status(200).json({ message: 'Item updated successfully', item: updatedItem[0] });
+      const updatedItem = await knex('items')
+        .where({ id })
+        .update({ name, description })
+        .returning('*');
+  
+      if (!updatedItem.length) {
+        return res.status(404).json({ error: 'Item not found' });
+      }
+  
+      res.status(200).json(updatedItem[0]);
     } catch (error) {
-        console.error('Error updating item:', error);
-        res.status(500).json({ error: 'Failed to update item' });
+      console.error('Error updating item:', error);
+      res.status(500).json({ error: 'Failed to update item' });
     }
-});
+  });
+
+
 
 // Delete item
 app.delete('/items/:id', async (req, res) => {
