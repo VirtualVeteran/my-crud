@@ -4,39 +4,39 @@ import Cookies from 'js-cookie'; // Import js-cookie to read from cookies
 const UserInventory = () => {
   const [items, setItems] = useState([]); // Track items, not inventory
   const [error, setError] = useState('');
-  const userId = Cookies.get('userId'); // Get userId from cookies
+  const userId = Cookies.get('userId');
+
+
+  console.log('Retrieved userId from cookie:', userId);
 
   useEffect(() => {
     const fetchUserInventory = async () => {
-        if (!userId) {
-          setError('User not logged in.');
-          return;
-        }
-      
-        try {
-          console.log(`Fetching items for user: ${userId}`);
-          const response = await fetch(`http://localhost:5000/user/${userId}`);
-      
-          if (!response.ok) {
-            throw new Error('Failed to fetch inventory');
-          }
-      
-          const data = await response.json();
-          console.log('Fetched data:', data); // Debugging the data
-          setItems(data); // Set the fetched items as inventory
-        } catch (err) {
-          console.error('Error fetching user inventory:', err);
-          setError('Something went wrong while fetching the inventory.');
-        }
-      };
-      
+      const userId = Cookies.get('userId');
+      console.log('Retrieved userId from cookie:', userId);
+  
+      if (!userId) {
+        setError('User not logged in.');
+        return;
+      }
+  
+      try {
+        const response = await fetch(`http://localhost:5000/user/${userId}`);
+        if (!response.ok) throw new Error('Failed to fetch inventory');
+        const data = await response.json();
+        setItems(data);
+      } catch (err) {
+        console.error('Error fetching inventory:', err);
+        setError('Failed to fetch inventory.');
+      }
+    };
+  
     fetchUserInventory();
-  }, [userId]); // Refetch inventory if userId changes (e.g., login/logout)
+  }, []);
 
   return (
     <div>
       <h2>Your Inventory</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: 'pink' }}>{error}</p>}
       {items.length > 0 ? (
         <ul>
           {items.map((item) => (

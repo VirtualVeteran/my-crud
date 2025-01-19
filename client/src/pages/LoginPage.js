@@ -27,7 +27,7 @@ const LoginPage = () => {
 
       if (response.status === 200) {
         // Save userId in cookies
-        Cookies.set('userId', data.userId, { expires: 7, path: '' }); // expires in 7 days
+        Cookies.set('userId', data.user.id, { expires: 7, path: '/' });
       
         // Redirect to the user's specific inventory page
         navigate('/user-inventory');
