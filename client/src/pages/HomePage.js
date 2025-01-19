@@ -45,14 +45,18 @@ const HomePage = () => {
         <p>Error: {error}</p>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          {items.map((item) => (
-            <div key={item.id} className="item-card">
-              <h3>{item.name}</h3>
-              <p>{truncate(item.description, 100)} <a href={`/item/${item.id}`}>View More</a></p>
-              <p>Quantity: {item.quantity}</p>
+        {items.map((item) => (
+          <div key={item.id} className="item-card">
+            <h3>{item.name}</h3>
+            <p>Price: ${item.price}</p>
+            <p>{truncate(item.description, 100)}</p>
+            {/* View Item button */}
+            <div className="view-item-button-container">
+              <a href={`/item/${item.id}`} className="kawaii-button">View Item</a>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       )}
     </div>
   );

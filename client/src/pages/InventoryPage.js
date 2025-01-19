@@ -24,8 +24,8 @@ const InventoryPage = () => {
           <div key={item.id} className="item-card">
             <h3>{item.name}</h3>
             <p>{item.description.slice(0, 100)}...</p>
-            <p>Quantity: {item.quantity}</p>
-            <Link to={`/item/${item.id}`} className="view-more-link">View More</Link>
+            <p>Price: ${item.price}</p>
+            <Link to={`/item/${item.id}`} className="view-item">View More</Link>
           </div>
         ))}
       </div>
