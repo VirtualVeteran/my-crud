@@ -44,7 +44,7 @@ const UserBanner = () => {
               fontFamily: 'Comic Sans MS, cursive',
             }}
           >
-            This is your personal inventory page
+            (っ´ω`)っ This is Your Personal Inventory Page ⊂(´• ω •`⊂)
           </Typography>
         </Box>
       </Box>

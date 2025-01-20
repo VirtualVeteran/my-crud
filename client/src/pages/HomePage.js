@@ -31,7 +31,7 @@ const HomePage = () => {
   return (
     <div>
       <header>
-        <h1>🍓 Welcome to Kawaii Inventory🍓</h1>
+        <h1>🥛🍓 Welcome to StrawberryMilk Inventory🍓🥛</h1>
         <div className="button-container">
           <a href="/" className="kawaii-button">Home</a>
           <a href="/login" className="kawaii-button">Login</a>

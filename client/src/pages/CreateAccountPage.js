@@ -67,16 +67,19 @@ const CreateAccountPage = () => {
       
         }}
       >
-        <Typography
-          variant="h4"
-          sx={{
-            color: '#FF91AF',
-            marginBottom: '1.5rem',
-            textAlign: 'center',
-          }}
-        >
-          Create Account
-        </Typography>
+       <Typography
+  variant="h4"
+  sx={{
+    color: '#FF91AF',
+    fontFamily: '"Bubblegum Sans", cursive',
+    fontSize: '8rem',
+    textAlign: 'center', // For centering the text
+    marginBottom: '1.5rem', // Retain the margin for spacing
+  }}
+>
+🧋Create Account🧋
+</Typography>
+
 
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 

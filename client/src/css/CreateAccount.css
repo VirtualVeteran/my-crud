@@ -22,3 +22,10 @@ body {
   background-color: #FF91AF;
 }
 
+.h1 {
+  color: #FF91AF;
+  font-family: "Bubblegum Sans", cursive;
+  font-size: 1rem;
+  display: center
+  ;
+}

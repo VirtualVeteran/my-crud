@@ -43,7 +43,7 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>🎀Login to Your Account🎀</h2>
+        <h2>(♡˙︶˙♡)  Login  (♡˙︶˙♡)</h2>
         {errorMessage && (
           <div className="error-message">
             <strong>{errorMessage}</strong>

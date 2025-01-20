@@ -20,11 +20,12 @@
   
   /* Container for the background and centering the form */
 .login-container {
-  background-image: url('../assets/background.jpg'); /* Correct image path */
+
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   height: 100vh;
+  margin-right: 650px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,10 +35,10 @@
 .login-form {
   background-color: #ffffff;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 400px; /* Limits the form width */
+  width: 200%;
+  max-width: 900px; /* Limits the form width */
   text-align: center;
 }
 
